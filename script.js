@@ -4,18 +4,23 @@ async function trackSpaceStation() {
 
  const response = await fetch('http://api.open-notify.org/iss-now.json');
  const getLocation = await response.json();
- console.log(getLocation)
  return getLocation;
 }
 
-function getCoordinates (){
-  const latitude = getLocation.iss_position.latitude;
-  const longitude = getLocation.iss_position.longitude;
+function getCoordinates(cor) {
+
+ const latitude = cor.iss_position.latitude;
+ const longitude = cor.iss_position.longitude;
+ return { latitude, longitude};
+
 }
 
-const updateDisplay = () => {
- h2.textContent = getCoordinates()
+async function updateDisplay() {
+
+ const locationData = await trackSpaceStation(); 
+ const coordinates = getCoordinates(locationData); 
+ h2.textContent = `Latitude: ${coordinates.latitude}, Longitude: ${coordinates.longitude}`;
 }
 
-trackSpaceStation();
+
 updateDisplay();
