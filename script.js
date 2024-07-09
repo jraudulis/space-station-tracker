@@ -1,25 +1,30 @@
 const h2 = document.getElementById('coordinates');
 
-async function trackSpaceStation() {
+const fetchData = async function() {
 
  const response = await fetch('http://api.open-notify.org/iss-now.json');
  const getLocation = await response.json();
  return getLocation;
 }
 
-function getCoordinates(cor) {
+function getCoordinates(coordinates) {
 
- const latitude = cor.iss_position.latitude;
- const longitude = cor.iss_position.longitude;
+ const latitude = coordinates.iss_position.latitude;
+ const longitude = coordinates.iss_position.longitude;
  return { latitude, longitude};
-
 }
 
 async function updateDisplay() {
 
- const locationData = await trackSpaceStation(); 
- const coordinates = getCoordinates(locationData); 
- h2.textContent = `Latitude: ${coordinates.latitude}, Longitude: ${coordinates.longitude}`;
+try{
+const locationData = await fetchData();
+const cor = getCoordinates(locationData);
+h2.textContent = `latitude ${cor.latitude} Longitude ${cor.longitude}`;
+}catch(err){
+ console.log('Oops daisy', err)
+}
+
+
 }
 
 
