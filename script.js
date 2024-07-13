@@ -1,7 +1,7 @@
 const h2 = document.getElementById('coordinates');
 
 const fetchData = async function() {
- const response = await fetch('http://api.open-notify.org/iss-now.json');
+ const response = await fetch(`http://api.open-notify.org/iss-now.json?timestamp=${new Date().getTime()}`);
  const getLocation = await response.json();
  return getLocation;
 }
@@ -13,7 +13,7 @@ function getCoordinates(coordinates) {
 }
 
 
-const map = L.map('map').setView([0,0], 13);
+const map = L.map('map').setView([0,0], 2);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 3,
@@ -31,10 +31,11 @@ setInterval(async function() {
  try{
  const locationData = await fetchData();
  const cor = getCoordinates(locationData);
+ console.log(cor);
   h2.textContent = `Latitude ${cor.latitude} Longitude ${cor.longitude}`;
 
 circle.setLatLng([cor.latitude, cor.longitude]);
-map.setView([cor.latitude, cor.longitude], 3)
+map.panTo([cor.latitude, cor.longitude])
 
  }catch(err){
   console.log('Oops daisy', err)
