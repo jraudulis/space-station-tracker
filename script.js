@@ -1,9 +1,26 @@
 const h2 = document.getElementById('coordinates');
+const loadingMessage = document.getElementById('loading-wrap');
+const content = document.getElementById('container');
+const animation = document.getElementById('loading-animation');
+
+function loadingAnimation(){
+   animation.classList.add('display');
+}
+
+loadingAnimation();
+
+function hideAnimation(){
+   animation.classList.remove('display');
+}
 
 const fetchData = async function() {
  const response = await fetch(`https://api.wheretheiss.at/v1/satellites/25544`);
  const getLocation = await response.json();
- return getLocation;
+  loadingMessage.style.display = 'none';
+  hideAnimation();
+  content.style.display = 'flex';
+  map.invalidateSize();
+  return getLocation;
 }
 
 function getCoordinates(coordinates) {

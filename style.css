@@ -14,11 +14,35 @@ h2{
  font-weight: 500;
  text-align: center;
 }
+#loading-animation{
+ width: 2rem;
+ height: 2rem;
+ border: 5px solid #f3f3f3;
+ border-top: 6px solid #9c41f2;
+ border-radius: 100%;
+ margin: auto;
+ visibility: hidden;
+ animation: spin 1s infinite linear;
+}
+
+#loading-animation.display{
+ visibility: visible;
+}
+
+@keyframes spin {
+  from {
+     transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+      }
+}
 
 #container{
  width: 100%;
- display: flex;
- justify-content: center;
+ flex-direction: column;
+ align-items: center;
+ display: none;
 }
 
 #map{
